@@ -658,7 +658,41 @@ limpiarBtn.addEventListener("click", () => {
   <footer>
     <p>© <span id="year"></span> Inclusión Digital Mayores</p>
   </footer>
-
+<script>
+    function goto(id){ document.querySelector(id)?.scrollIntoView({behavior:'smooth'}); }
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Accesibilidad
+    (function(){
+      const root = document.documentElement;
+      const incBtn = document.getElementById('inc-font');
+      const decBtn = document.getElementById('dec-font');
+      const contrastBtn = document.getElementById('contrast');
+      const FONTS = [16,18,20,22,24]; let current=18;
+      function setFont(px){ root.style.setProperty('--font-size', px+'px'); }
+      incBtn.onclick=()=>{ if(FONTS.includes(current)){ let i=FONTS.indexOf(current); if(i<FONTS.length-1){current=FONTS[i+1]; setFont(current);} } };
+      decBtn.onclick=()=>{ if(FONTS.includes(current)){ let i=FONTS.indexOf(current); if(i>0){current=FONTS[i-1]; setFont(current);} } };
+      contrastBtn.onclick=()=>{ document.body.classList.toggle('contrast'); };
+    })();
+    // Foro localStorage
+    (function(){
+      const form=document.getElementById('form-foro'),list=document.getElementById('lista-temas'),status=document.getElementById('status');
+      const KEY='foro-temas';
+      function load(){
+        const data=JSON.parse(localStorage.getItem(KEY)||'[]'); list.innerHTML='';
+        data.forEach((t,idx)=>{ let el=document.createElement('article'); el.className='topic';
+          el.innerHTML=`<h4>${t.tema}</h4><small>por ${t.nombre} · ${new Date(t.ts).toLocaleString()}</small><p>${t.mensaje}</p>`;
+          list.appendChild(el); });
+      }
+      form.onsubmit=(e)=>{ e.preventDefault(); const fd=new FormData(form);
+        const nombre=fd.get('nombre'),tema=fd.get('tema'),mensaje=fd.get('mensaje');
+        if(!nombre||!tema||!mensaje){ status.textContent='Completá todos los campos.'; return;}
+        const data=JSON.parse(localStorage.getItem(KEY)||'[]'); data.unshift({nombre,tema,mensaje,ts:Date.now()});
+        localStorage.setItem(KEY,JSON.stringify(data)); form.reset(); status.textContent='¡Publicado!'; load();
+      };
+      load();
+    })();
+  </script>
   
 </body>
 </html>
+
