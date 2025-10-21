@@ -47,7 +47,7 @@
     }
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; }
     .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--fg); }
-     .brand-logo {
+    .brand-logo {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -60,6 +60,7 @@
   flex-shrink: 0;        /* evita que se deforme */
   aspect-ratio: 1 / 1;   /* mantiene la forma perfectamente cuadrada */
 }
+
     nav { display: flex; gap: 8px; flex-wrap: wrap; }
     .nav-btn {
       border: 0; padding: 10px 14px; border-radius: var(--radius);
@@ -110,13 +111,13 @@
       * { scroll-behavior: auto; animation: none !important; transition: none !important; }
     }
 
-    .hero p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 1.5rem;      /* Aumenta el tamaño del texto */
-  line-height: 1.7;       /* Mejora la legibilidad */
-  font-weight: 300;       /* Lo hace un poco más grueso */
-  text-align: center;     /* Lo centra debajo del título */
+      .hero p,
+.video .v-body,
+.dl,
+.topic,
+main,
+section {
+  font-size: var(--font-size);
 }
 
 .hero {
@@ -711,8 +712,5 @@ limpiarBtn.addEventListener("click", () => {
   </script>
 </body>
 </html>
-
-
-
 
 
